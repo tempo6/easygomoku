@@ -61,6 +61,14 @@ struct Point{
     }
 };
 
+struct Point_With_Score{
+    Point p;
+    int score;
+    bool operator <(const Point_With_Score &T)const{
+        return score < T.score;
+    }
+};
+
 class gomoku
 {
 public:
@@ -119,23 +127,10 @@ private:
     {-1,1}};
 
     bool legal(Point p);
-    int which(Point p);
-    int calval(Point p,int who);
-    int hmy(Point p,int f,int who);
 
-    bool checkfive(Point p,int who);
-    bool checklivefour(Point p,int who);
-    int checkdeadfour(Point p,int who);
-    int checklivethree(Point p,int who);
-    bool checkdeadthree(Point p,int who);
-    bool checklivetwo(Point p,int who);
-    bool checkdeadtwo(Point p,int who);
-
-    int searching(Point p,int who,int depth);
-
-    int evaluate(int x,int y,int color);
-    int check();
-    int min_max(int v,int dep,int ab);
+    int evaluate(int x,int y,int color,int v);
+    int check(int v);
+    int min_max(int v,int dep,int a,int b);
     bool isWin(int v);
     bool blank(int x,int y);
     Point move();

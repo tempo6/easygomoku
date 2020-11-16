@@ -96,7 +96,7 @@ void mywin::clear()
        blk[i][j].hide();wht[i][j].hide();
     }
     txt.hide();
-    end=0;AI.setwho(2);AI.setlevel(1);
+    end=0;AI.setwho(2);AI.setlevel(2);
     this->show();
 }
 
