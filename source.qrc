@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/new/icon">
+        <file alias="black">sources/icon/black(after).jpg</file>
+        <file alias="white">sources/icon/white(after).jpg</file>
+    </qresource>
+</RCC>
