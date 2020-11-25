@@ -158,23 +158,38 @@ public:
         }
         reset.setParent(this);
         reset.setGeometry(250,50,100,100);
-        pvp.setParent(this);
-        pvp.setGeometry(100,50,100,100);
         pve.setParent(this);
-        pve.setGeometry(400,50,100,100);
+        pve.setGeometry(100,50,100,100);
+        pvp.setParent(this);
+        pvp.setGeometry(400,50,100,100);
         txt.setParent(this);
         txt.setGeometry(100,150,400,50);
         txt.setAlignment(Qt::AlignHCenter);
+        lev.setParent(this);
+        lev.setGeometry(100,155,100,25);
+        fst.setParent(this);
+        fst.setGeometry(100,185,100,25);
         myfont.setPointSize(20);
         myfont.setFamily("微软雅黑");
         txt.setFont(myfont);
-        pvp.setText("人机对战");
-        pve.setText("人类对战");
+        pve.setText("人机对战");
+        pvp.setText("人类对战");
         reset.setText("重新开始");
         ifAI=0;
+        ifFst=0;
+        lev.addItem("超级憨憨");
+        lev.addItem("铁憨憨");
+        lev.addItem("憨憨");
+        fst.addItem("玩家先手");
+        fst.addItem("电脑先手");
         QObject::connect(&reset,&QPushButton::clicked,this,&mywin::clear);
         QObject::connect(&pvp,&QPushButton::clicked,this,&mywin::topvp);
         QObject::connect(&pve,&QPushButton::clicked,this,&mywin::topve);
+        QObject::connect(&lev,SIGNAL(currentIndexChanged(int)),this,SLOT(setLev(int)));
+        QObject::connect(&fst,SIGNAL(currentIndexChanged(int)),this,SLOT(setfst(int)));
+        AILevel=0;
+        lev.hide();
+        fst.hide();
         clear();
     }
 
@@ -183,17 +198,21 @@ public:
 private:
     gomoku game;
     mygomokuAI AI;
-    int who;
-    bool end,ifAI;
+    int who,AILevel;
+    bool end,ifAI,ifFst;
     QLabel blk[20][20],wht[20][20],txt;
     QFont myfont;
     QPixmap bk,wt;
     QPushButton reset,pvp,pve;
+    QComboBox lev,fst;
     void mousePressEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *event);
     void endit();
     void topvp();
     void topve();
+public slots:
+    void setLev(int v);
+    void setfst(int v);
 };
 
 #endif // GOMOKU_H

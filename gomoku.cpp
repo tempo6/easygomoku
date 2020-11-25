@@ -96,7 +96,16 @@ void mywin::clear()
        blk[i][j].hide();wht[i][j].hide();
     }
     txt.hide();
-    end=0;AI.setwho(2);AI.setlevel(2);
+    end=0;
+    if(ifFst)
+    {
+        AI.setwho(1);
+        game.step((Point){8,8});
+        blk[8][8].show();
+        who=2;
+    }
+    else AI.setwho(2);
+    AI.setlevel(AILevel);
     this->show();
 }
 
@@ -132,7 +141,7 @@ void mywin::mousePressEvent(QMouseEvent *event)
       }
       if(game.ifwin()) endit();
       //qDebug("%d\n",who);
-      if(ifAI&&!end&&who==2)
+      if(ifAI&&!end&&who==2-ifFst)
       {
         txt.setText("AI思考中……");
         txt.show();
@@ -149,14 +158,20 @@ void mywin::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void mywin::topvp()
-{
-    ifAI=1;clear();
-}
-
 void mywin::topve()
 {
-    ifAI=0;clear();
+    ifAI=1;
+    clear();
+    lev.show();
+    fst.show();
+}
+
+void mywin::topvp()
+{
+    ifAI=0;
+    clear();
+    lev.hide();
+    fst.hide();
 }
 
 void mywin::endit()
@@ -165,4 +180,18 @@ void mywin::endit()
     if(who==1) txt.setText("白棋获胜！");
     else txt.setText("黑棋获胜！");
     txt.show();
+}
+
+void mywin::setLev(int v)
+{
+    AILevel=v;
+    ifAI=1;
+    clear();
+}
+
+void mywin::setfst(int v)
+{
+    if(v==0) ifFst=0;
+    else ifFst=1;
+    clear();
 }
